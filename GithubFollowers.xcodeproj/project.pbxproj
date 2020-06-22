@@ -20,6 +20,10 @@
 		04101B33249F7136000166DD /* GFBodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04101B32249F7136000166DD /* GFBodyLabel.swift */; };
 		04101B35249F76DF000166DD /* GFAlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04101B34249F76DF000166DD /* GFAlertVC.swift */; };
 		04101B37249F8554000166DD /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04101B36249F8554000166DD /* UIViewController+Ext.swift */; };
+		04827F7924A0EBB400FA6E03 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04827F7824A0EBB400FA6E03 /* Follower.swift */; };
+		04827F7B24A0EC5C00FA6E03 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04827F7A24A0EC5C00FA6E03 /* User.swift */; };
+		04827F7E24A0F4BD00FA6E03 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04827F7D24A0F4BD00FA6E03 /* NetworkManager.swift */; };
+		04827F8124A10B7600FA6E03 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04827F8024A10B7600FA6E03 /* ErrorMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +42,10 @@
 		04101B32249F7136000166DD /* GFBodyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFBodyLabel.swift; sourceTree = "<group>"; };
 		04101B34249F76DF000166DD /* GFAlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFAlertVC.swift; sourceTree = "<group>"; };
 		04101B36249F8554000166DD /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
+		04827F7824A0EBB400FA6E03 /* Follower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
+		04827F7A24A0EC5C00FA6E03 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		04827F7D24A0F4BD00FA6E03 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		04827F8024A10B7600FA6E03 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +78,8 @@
 		04101B12249F3185000166DD /* GithubFollowers */ = {
 			isa = PBXGroup;
 			children = (
+				04827F7F24A10AC800FA6E03 /* Utilities */,
+				04827F7C24A0F17500FA6E03 /* Managers */,
 				04101B3A249F8FCB000166DD /* Extension */,
 				04101B38249F8F9D000166DD /* Core */,
 				04101B3C249F8FFE000166DD /* Model */,
@@ -132,8 +142,26 @@
 		04101B3C249F8FFE000166DD /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				04827F7824A0EBB400FA6E03 /* Follower.swift */,
+				04827F7A24A0EC5C00FA6E03 /* User.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		04827F7C24A0F17500FA6E03 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				04827F7D24A0F4BD00FA6E03 /* NetworkManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		04827F7F24A10AC800FA6E03 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				04827F8024A10B7600FA6E03 /* ErrorMessage.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -206,14 +234,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04827F7B24A0EC5C00FA6E03 /* User.swift in Sources */,
 				04101B2C249F47ED000166DD /* GFTextField.swift in Sources */,
 				04101B28249F3B51000166DD /* FavoritesVC.swift in Sources */,
 				04101B2E249F6511000166DD /* FollowersVC.swift in Sources */,
 				04101B37249F8554000166DD /* UIViewController+Ext.swift in Sources */,
 				04101B2A249F4241000166DD /* GFButton.swift in Sources */,
 				04101B35249F76DF000166DD /* GFAlertVC.swift in Sources */,
+				04827F8124A10B7600FA6E03 /* ErrorMessage.swift in Sources */,
 				04101B33249F7136000166DD /* GFBodyLabel.swift in Sources */,
+				04827F7924A0EBB400FA6E03 /* Follower.swift in Sources */,
 				04101B31249F711A000166DD /* GFTitleLabel.swift in Sources */,
+				04827F7E24A0F4BD00FA6E03 /* NetworkManager.swift in Sources */,
 				04101B18249F3185000166DD /* SearchVC.swift in Sources */,
 				04101B14249F3185000166DD /* AppDelegate.swift in Sources */,
 				04101B16249F3185000166DD /* SceneDelegate.swift in Sources */,
@@ -354,7 +386,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 65KFFC5UGQ;
-				INFOPLIST_FILE = GithubFollowers/Info.plist;
+				INFOPLIST_FILE = GithubFollowers/Support/info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -372,7 +404,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 65KFFC5UGQ;
-				INFOPLIST_FILE = GithubFollowers/Info.plist;
+				INFOPLIST_FILE = GithubFollowers/Support/info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
