@@ -6,14 +6,15 @@
 //  Copyright © 2020 Ahmed Eid. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class NetworkManager {
     
     //MARK:- Properities
     
     static let shared   = NetworkManager()
-    static let baseURL         = "https://api.github.com/users/"
+    static let baseURL  = "https://api.github.com/users/"
+    let cache           = NSCache<NSString, UIImage>()
     enum EndPoint {
         case followers(String, Int)
         
@@ -25,33 +26,34 @@ class NetworkManager {
         }
     }
     
+    
     //MARK:- Init
     private init() {}
     
     
     
     //MARK:- Methods
-    func getFollowers(for username: String, page: Int, completed: @escaping([Follower]?, ErrorMessage?)->()) {
+    func getFollowers(for username: String, page: Int, completed: @escaping(Result<[Follower], ErrorMessage>)->()) {
         
         guard let url = EndPoint.followers(username, page).url else {
-            completed(nil, .invalidUsername)
+            completed(.failure(.invalidUsername))
             return
         }
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             
             if let _ = error {
-                completed(nil, .unableToComplete)
+                completed(.failure(.unableToComplete))
                 return
             }
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                completed(nil, .invalidResponse)
+                completed(.failure(.invalidResponse))
                 return
             }
             
             guard let safeData = data else {
-                completed(nil, .invalidData)
+                completed(.failure(.invalidData))
                 return
             }
             
@@ -59,9 +61,9 @@ class NetworkManager {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let followers = try decoder.decode([Follower].self, from: safeData)
-                completed(followers, nil)
+                completed(.success(followers))
             } catch {
-                completed(nil, .invalidData)
+                completed(.failure(.invalidData))
             }
         }
         
