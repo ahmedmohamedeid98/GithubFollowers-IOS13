@@ -14,9 +14,11 @@ class FollowersVC: UIViewController {
     enum Section { case main }
     
     var username: String!
-    var followers           = [Follower]()
-    var page                = 1
-    var hasMoreFollowers    = true
+    var followers               = [Follower]()
+    var filterFollowers         = [Follower]()
+    var shouldReUpdateCV:Bool   = false
+    var page                    = 1
+    var hasMoreFollowers        = true
     
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Follower>!
@@ -25,6 +27,7 @@ class FollowersVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
+        configuerSearchController()
         configureCollectionView()
         getFollowers(page: page)
         configureDataSource()
@@ -39,6 +42,15 @@ class FollowersVC: UIViewController {
     private func configureViewController() {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    private func configuerSearchController() {
+        let searchController                                    = UISearchController()
+        searchController.searchBar.placeholder                  = "Search for a username"
+        searchController.searchResultsUpdater                   = self
+        searchController.searchBar.delegate                     = self
+        searchController.obscuresBackgroundDuringPresentation   = false
+        navigationItem.searchController                         = searchController
     }
     
     private func configureCollectionView() {
@@ -62,7 +74,7 @@ class FollowersVC: UIViewController {
                         self.showEmptyStateView(withMessage: "This user doesn't have any followers. Go follow them 🙂.")
                         return
                     }
-                    self.updateData()
+                    self.updateData(on: self.followers)
                 case .failure(let error):
                     self.presentGFAlertOnTheMainThread(title: "Failure", message: error.rawValue, buttonTitle: "Ok")
             }
@@ -77,7 +89,7 @@ class FollowersVC: UIViewController {
         })
     }
     
-    private func updateData() {
+    private func updateData(on followers: [Follower]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
         snapshot.appendSections([.main])
         snapshot.appendItems(followers)
@@ -90,9 +102,9 @@ class FollowersVC: UIViewController {
 extension FollowersVC: UICollectionViewDelegate {
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        let offsetY         = scrollView.contentOffset.y
-        let contentHeight    = scrollView.contentSize.height
-        let height           = scrollView.frame.size.height
+        let offsetY             = scrollView.contentOffset.y
+        let contentHeight       = scrollView.contentSize.height
+        let height              = scrollView.frame.size.height
         
         if offsetY > contentHeight - height {
             guard hasMoreFollowers else { return }
@@ -100,4 +112,23 @@ extension FollowersVC: UICollectionViewDelegate {
             getFollowers(page: page)
         }
     }
+}
+
+extension FollowersVC: UISearchResultsUpdating, UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let filter = searchController.searchBar.text, !filter.isEmpty else { return }
+        shouldReUpdateCV = true
+        filterFollowers  = followers.filter {
+            $0.login.lowercased()
+                .replacingOccurrences(of: " ", with: "")
+                .contains(filter.lowercased().replacingOccurrences(of: " ", with: ""))
+        }
+        updateData(on: filterFollowers)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        if shouldReUpdateCV { updateData(on: self.followers) }
+    }
+    
+    
 }
