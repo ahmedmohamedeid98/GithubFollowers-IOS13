@@ -9,7 +9,7 @@
 import UIKit
 
 enum ItemInfoType {
-    case repo, gist, follower, following
+    case repo, gists, followers, following
 }
 
 class GFItemInfoView: UIView {
@@ -20,6 +20,7 @@ class GFItemInfoView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configure()
     }
     
     required init?(coder: NSCoder) {
@@ -33,7 +34,7 @@ class GFItemInfoView: UIView {
         
         symbolImageView.translatesAutoresizingMaskIntoConstraints = false
         symbolImageView.tintColor   = .label
-        symbolImageView.contentMode = .scaleToFill
+        symbolImageView.contentMode = .scaleAspectFill
         
         NSLayoutConstraint.activate([
             symbolImageView.topAnchor.constraint(equalTo: topAnchor),
@@ -46,10 +47,10 @@ class GFItemInfoView: UIView {
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             titleLabel.heightAnchor.constraint(equalToConstant: 18),
             
-            countLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 18)
+            countLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
+            countLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            countLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            countLabel.heightAnchor.constraint(equalToConstant: 18)
         ])
     }
     
@@ -58,11 +59,11 @@ class GFItemInfoView: UIView {
         switch itemType {
             case .repo:
                 symbolImageView.image = UIImage(systemName: SFSymbols.repo)
-                titleLabel.text       = "Public Repo"
-            case .gist:
+                titleLabel.text       = "Public Repos"
+            case .gists:
                 symbolImageView.image = UIImage(systemName: SFSymbols.gist)
-                titleLabel.text       = "Public Gist"
-            case .follower:
+                titleLabel.text       = "Public Gists"
+            case .followers:
                 symbolImageView.image = UIImage(systemName: SFSymbols.followers)
                 titleLabel.text       = "Followers"
             case .following:

@@ -41,7 +41,11 @@ class UserInfoVC: UIViewController {
         NetworkManager.shared.getUserInfo(for: username) { result in
             switch result {
                 case .success(let user):
-                    DispatchQueue.main.async { self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView) }
+                    DispatchQueue.main.async {
+                        self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
+                        self.add(childVC: GFRepoItemVC(user: user), to: self.userItemOne)
+                        self.add(childVC: GFFollowerItemVC(user: user), to: self.userItemTwo)
+                }
                 case .failure(let error):
                     self.presentGFAlertOnTheMainThread(title: "Something want wrong", message: error.rawValue, buttonTitle: "OK")
             }
@@ -62,9 +66,6 @@ class UserInfoVC: UIViewController {
                 itemView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding)
             ])
         }
-
-        userItemOne.backgroundColor = .systemRed
-        userItemTwo.backgroundColor = .systemTeal
         
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
