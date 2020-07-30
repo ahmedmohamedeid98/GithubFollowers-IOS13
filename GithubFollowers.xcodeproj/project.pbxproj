@@ -204,9 +204,7 @@
 			children = (
 				04101B34249F76DF000166DD /* GFAlertVC.swift */,
 				043CA4DC24CE911D000033B7 /* GFUserInfoHeaderVC.swift */,
-				0472A71A24D2078100F3393C /* GFItemInfoVC.swift */,
-				0472A71C24D20FDE00F3393C /* GFRepoItemVC.swift */,
-				0472A71E24D2112800F3393C /* GFFollowerItemVC.swift */,
+				0472A72424D2382F00F3393C /* GFItemInfoVCs */,
 			);
 			path = GFViewController;
 			sourceTree = "<group>";
@@ -234,6 +232,16 @@
 				04827F8524A1430600FA6E03 /* GFAvatarImageView.swift */,
 			);
 			path = GFImageView;
+			sourceTree = "<group>";
+		};
+		0472A72424D2382F00F3393C /* GFItemInfoVCs */ = {
+			isa = PBXGroup;
+			children = (
+				0472A71A24D2078100F3393C /* GFItemInfoVC.swift */,
+				0472A71C24D20FDE00F3393C /* GFRepoItemVC.swift */,
+				0472A71E24D2112800F3393C /* GFFollowerItemVC.swift */,
+			);
+			path = GFItemInfoVCs;
 			sourceTree = "<group>";
 		};
 		04827F7C24A0F17500FA6E03 /* Managers */ = {

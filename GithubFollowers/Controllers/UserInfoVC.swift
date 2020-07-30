@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol UserInfoVCDelegate: class {
+    func didTapGithubProfile(for user: User)
+    func didTapGetFollowers(for user: User)
+}
+
 class UserInfoVC: UIViewController {
 
     var username: String?
@@ -16,6 +21,7 @@ class UserInfoVC: UIViewController {
     var userItemTwo         = UIView()
     var dateLabel           = GFBodyLabel(textAlignment: .center)
     var itemsView: [UIView] = []
+    weak var delegate: FollowersVCDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,18 +48,26 @@ class UserInfoVC: UIViewController {
         NetworkManager.shared.getUserInfo(for: username) { result in
             switch result {
                 case .success(let user):
-                    DispatchQueue.main.async {
-                        self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
-                        self.add(childVC: GFRepoItemVC(user: user), to: self.userItemOne)
-                        self.add(childVC: GFFollowerItemVC(user: user), to: self.userItemTwo)
-                        self.dateLabel.text = "GitHub since \(user.createdAt.convertDateToDisplayingFormate())"
-                }
+                    DispatchQueue.main.async { self.configureUIElements(with: user) }
+                
                 case .failure(let error):
                     self.presentGFAlertOnTheMainThread(title: "Something want wrong", message: error.rawValue, buttonTitle: "OK")
             }
         }
     }
     
+    private func configureUIElements(with user: User) {
+        let repoItemVC          = GFRepoItemVC(user: user)
+        repoItemVC.delegate     = self
+        
+        let followerItemVC      = GFFollowerItemVC(user: user)
+        followerItemVC.delegate = self
+        
+        self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
+        self.add(childVC: repoItemVC, to: self.userItemOne)
+        self.add(childVC: followerItemVC, to: self.userItemTwo)
+        self.dateLabel.text = "GitHub since \(user.createdAt.convertDateToDisplayingFormate())"
+    }
     
     func layoutUI() {
         let padding: CGFloat    = 20
@@ -87,6 +101,22 @@ class UserInfoVC: UIViewController {
     @objc func dismissVC() {
         dismiss(animated: true)
     }
-    
+}
 
+extension UserInfoVC: UserInfoVCDelegate {
+    
+    func didTapGithubProfile(for user: User) {
+        guard let url = URL(string: user.htmlUrl) else { return }
+        self.presentSafariController(with: url)
+    }
+    
+    func didTapGetFollowers(for user: User) {
+        // check if the user has follower or not
+        guard user.followers != 0 else {
+            presentGFAlertOnTheMainThread(title: "No Followers", message: "this user has no followers, help him to get one.", buttonTitle: "I'm sorry, 😟")
+            return
+        }
+        delegate.didRequestFollowers(for: user.login)
+        dismissVC()
+    }
 }

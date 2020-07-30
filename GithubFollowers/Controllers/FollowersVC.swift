@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol FollowersVCDelegate: class {
+    func didRequestFollowers(for username: String)
+}
+
 class FollowersVC: UIViewController {
 
     //MARK:- Properities
@@ -16,7 +20,7 @@ class FollowersVC: UIViewController {
     var username: String!
     var followers               = [Follower]()
     var filterFollowers         = [Follower]()
-    var isSearching:Bool   = false
+    var isSearching:Bool        = false
     var page                    = 1
     var hasMoreFollowers        = true
     
@@ -119,6 +123,7 @@ extension FollowersVC: UICollectionViewDelegate {
         
         let destVC      = UserInfoVC()
         destVC.username = follower.login
+        destVC.delegate = self
         let destNC      = UINavigationController(rootViewController: destVC)
         present(destNC, animated: true)
     }
@@ -142,6 +147,18 @@ extension FollowersVC: UISearchResultsUpdating, UISearchBarDelegate {
             isSearching = false
         }
     }
+}
+
+extension FollowersVC: FollowersVCDelegate {
     
+    func didRequestFollowers(for username: String) {
+        collectionView.setContentOffset(.zero, animated: true)
+        self.username   = username
+        title           = username
+        page            = 1
+        followers.removeAll()
+        filterFollowers.removeAll()
+        getFollowers(page: page)
+    }
     
 }
