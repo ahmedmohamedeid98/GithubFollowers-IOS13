@@ -54,11 +54,11 @@ extension UIViewController {
         }
     }
     
-    func showEmptyStateView(withMessage message: String) {
+    func showEmptyStateView(withMessage message: String, onView view: UIView) {
         DispatchQueue.main.async {
             let emptyStateView      = GFEmptyStateView(message: message)
-            emptyStateView.frame    = self.view.bounds
-            self.view.addSubview(emptyStateView)
+            emptyStateView.frame    = view.bounds
+            view.addSubview(emptyStateView)
         }
     }
 }

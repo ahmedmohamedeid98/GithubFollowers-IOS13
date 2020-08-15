@@ -77,7 +77,7 @@ class FollowersVC: UIViewController {
                     if followers.count < 100 { self.hasMoreFollowers = false }
                     self.followers.append(contentsOf: followers)
                     if self.followers.isEmpty {
-                        self.showEmptyStateView(withMessage: "This user doesn't have any followers. Go follow them 🙂.")
+                        self.showEmptyStateView(withMessage: "This user doesn't have any followers. Go follow them 🙂.", onView: self.view)
                         return
                     }
                     self.updateData(on: self.followers)
