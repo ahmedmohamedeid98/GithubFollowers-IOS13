@@ -81,4 +81,16 @@ extension FavoritesVC: UITableViewDataSource, UITableViewDelegate {
         navigationController?.pushViewController(followersVC, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+        let favorite = favorites[indexPath.row]
+        self.favorites.remove(at: indexPath.row)
+        self.tableView.deleteRows(at: [indexPath], with: .fade)
+        
+        PersistanceManager.update(with: favorite, actionType: .remove) { [weak self] error in
+            guard let self = self else { return }
+            guard let err  = error else { return }
+            self.presentGFAlertOnTheMainThread(title: "Unable to remove", message: err.rawValue, buttonTitle: "Ok")
+        }
+    }
 }
