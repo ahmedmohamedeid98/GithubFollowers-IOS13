@@ -37,8 +37,10 @@ class FavoritesVC: UIViewController {
                 case .success(let favorites):
                     if favorites.isEmpty {
                         self.showEmptyStateView(withMessage: "No Favorites?!!\n add one to favorite screen.", onView: self.view)
+                        self.tableView.alpha = 0
                     } else {
                         self.favorites = favorites
+                        self.tableView.alpha = 1
                         self.tableView.reloadData()
                         self.view.bringSubviewToFront(self.tableView)
                     }
