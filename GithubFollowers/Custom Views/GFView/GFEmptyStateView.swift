@@ -16,7 +16,8 @@ class GFEmptyStateView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        configureMessageLabelUI()
+        configureEmptyStateImageUI()
     }
     
     required init?(coder: NSCoder) {
@@ -28,28 +29,33 @@ class GFEmptyStateView: UIView {
         messageLabel.text = message
     }
     
-    
-    
-    
-    private func configure() {
+    private func configureMessageLabelUI() {
         addSubview(messageLabel)
-        addSubview(emptyStateImage)
-        
         messageLabel.numberOfLines  = 3
         messageLabel.textColor      = .secondaryLabel
         
-        emptyStateImage.image       = UIImage(named: "empty-state-logo")
-        emptyStateImage.translatesAutoresizingMaskIntoConstraints = false
+        let messageLabelYCenter: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? -80 : -120
+        messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: messageLabelYCenter).isActive = true
+        
         NSLayoutConstraint.activate([
-            messageLabel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: -150),
             messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
-            messageLabel.heightAnchor.constraint(equalToConstant: 200),
-            
-            emptyStateImage.widthAnchor.constraint(equalTo: widthAnchor , multiplier: 1.3),
-            emptyStateImage.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1.3),
-            emptyStateImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 170),
-            emptyStateImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 40)
+            messageLabel.heightAnchor.constraint(equalToConstant: 200)
+        ])
+    }
+    
+    private func configureEmptyStateImageUI() {
+        addSubview(emptyStateImage)
+        emptyStateImage.image       = Images.emptySate
+        emptyStateImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        let emptyStateBottomConstraint: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Zoomed ? 100 : 50
+        emptyStateImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: emptyStateBottomConstraint).isActive = true
+
+        NSLayoutConstraint.activate([
+            emptyStateImage.widthAnchor.constraint(equalTo: widthAnchor , multiplier: 1.1),
+            emptyStateImage.heightAnchor.constraint(equalTo: widthAnchor, multiplier: 1.1),
+            emptyStateImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 150)
         ])
     }
     
