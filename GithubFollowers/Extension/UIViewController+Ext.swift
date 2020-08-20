@@ -9,8 +9,6 @@
 import UIKit
 import SafariServices
 
-fileprivate var containerView: UIView!
-
 extension UIViewController {
     
     func presentSafariController(with url: URL) {
@@ -25,40 +23,6 @@ extension UIViewController {
             alert.modalPresentationStyle = .overFullScreen
             alert.modalTransitionStyle   = .crossDissolve
             self.present(alert, animated: true)
-        }
-    }
-    
-    func showLoadingView() {
-        containerView                   = UIView(frame: view.bounds)
-        containerView.backgroundColor   = .systemBackground
-        containerView.alpha             = 0
-        view.addSubview(containerView)
-        
-        UIView.animate(withDuration: 0.25) { containerView.alpha = 0.8 }
-        
-        let activityIndicatorView = UIActivityIndicatorView(style: .large)
-        containerView.addSubview(activityIndicatorView)
-        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
-        
-        activityIndicatorView.startAnimating()
-    }
-    
-    func dismissLoadingView() {
-        DispatchQueue.main.async {
-            containerView.removeFromSuperview()
-            containerView = nil
-        }
-    }
-    
-    func showEmptyStateView(withMessage message: String, onView view: UIView) {
-        DispatchQueue.main.async {
-            let emptyStateView      = GFEmptyStateView(message: message)
-            emptyStateView.frame    = view.bounds
-            view.addSubview(emptyStateView)
         }
     }
 }
