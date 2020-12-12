@@ -9,13 +9,5 @@ RESTful API-based app where user can get the followers list for any username and
 <br>
 
 <p align="center">
-  <img src="imgs/search.png" width="220" height= "400">  
-  <img src="imgs/followers.png" width="220" height= "400">
-  <img src="imgs/not_founded_user.png" width="220" height= "400">
-  <img src="imgs/alert.png" width="220" height= "400">
-  <img src="imgs/filter.png" width="220" height= "400"> 
-  <img src="imgs/about.png" width="220" height= "400">
-  <img src="imgs/browser.png" width="220" height= "400">
-  <img src="imgs/favorite.png" width="220" height= "400">
-  
+  <img src="imgs/1.png" width="1100" height= "650">  
 </p>
