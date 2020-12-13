@@ -9,5 +9,13 @@ RESTful API-based app where user can get the followers list for any username and
 <br>
 
 <p align="center">
-  <img src="imgs/1.png" width="1100" height= "650">  
+  <img src="imgs/1.png">  
+</p>
+<br>
+<p align="center">
+  <img src="imgs/2.png">  
+</p>
+<br>
+<p align="center">
+  <img src="imgs/3.png">  
 </p>
